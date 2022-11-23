@@ -10,6 +10,12 @@ import (
 	// "os"
 )
 
+func sayPong(conn net.Conn){
+	buffer := make([]byte, 1024)
+	conn.Read(buffer)
+	conn.Write([]byte("+PONG\r\n"))
+	defer conn.Close()
+}
 func main() {
 	// You can use print statements as follows for debugging, they'll be visible when running tests.
 	fmt.Println("Logs from your program will appear here!")
@@ -27,10 +33,7 @@ func main() {
 			fmt.Println("Error accepting connection: ", err.Error())
 			os.Exit(1)
 		}
-		buffer := make([]byte, 1024)
-		conn.Read(buffer)
-		conn.Write([]byte("+PONG\r\n"))
-		defer conn.Close()
+		go sayPong(conn)
 
 	}
 

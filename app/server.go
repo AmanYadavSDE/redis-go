@@ -30,7 +30,7 @@ func main() {
 		buffer := make([]byte, 1024)
 		conn.Read(buffer)
 		conn.Write([]byte("+PONG\r\n"))
-		conn.Close()
+		defer conn.Close()
 
 	}
 
